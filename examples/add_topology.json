@@ -1,0 +1,102 @@
+{
+    "nodes": [
+      {
+        "type": "endnode",
+        "name": "host-1-p0",
+        "ports": [
+          {
+            "id": "P11",
+            "name": "Port1",
+            "portSpeed": 1000,
+            "numberOfQueues": 8
+          }
+        ]
+      },
+      {
+        "type": "bridge",
+        "name": "switch-c1",
+        "procDelay": 40000,
+        "ports": [
+          {
+            "id": "P21",
+            "name": "Port1",
+            "portSpeed": 1000,
+            "numberOfQueues": 8
+          },
+          {
+            "id": "P22",
+            "name": "Port2",
+            "portSpeed": 1000,
+            "numberOfQueues": 8
+          },
+          {
+            "id": "P23",
+            "name": "Port3",
+            "portSpeed": 1000,
+            "numberOfQueues": 8
+          },
+          {
+            "id": "P24",
+            "name": "Port4",
+            "portSpeed": 1000,
+            "numberOfQueues": 8
+          }
+        ]
+      },
+      {
+        "type": "bridge",
+        "name": "switch-c2",
+        "procDelay": 40000,
+        "ports": [
+          {
+            "id": "P31",
+            "name": "Port1",
+            "portSpeed": 1000,
+            "numberOfQueues": 8
+          },
+          {
+            "id": "P32",
+            "name": "Port2",
+            "portSpeed": 1000,
+            "numberOfQueues": 8
+          },
+          {
+            "id": "P43",
+            "name": "Port3",
+            "portSpeed": 1000,
+            "numberOfQueues": 8
+          },
+          {
+            "id": "P44",
+            "name": "Port4",
+            "portSpeed": 1000,
+            "numberOfQueues": 8
+          }
+        ]
+      }
+    ],
+    "links": [
+      {
+        "id": "l1",
+        "source": "switch-c4.Port2",
+        "target": "switch-p1-a2.Port4",
+        "propogationDelay": 10,
+        "bandwidth": 1000
+      },
+      {
+        "id": "l2",
+        "source": "switch-c4.Port3",
+        "target": "switch-p2-a2.Port4",
+        "propogationDelay": 10,
+        "bandwidth": 1000
+      },
+      {
+        "id": "l3",
+        "source": "switch-c4.Port4",
+        "target": "switch-p3-a2.Port4",
+        "propogationDelay": 10,
+        "bandwidth": 1000
+      }
+    ],
+    "index": 0
+  }

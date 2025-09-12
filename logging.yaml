@@ -1,0 +1,68 @@
+# SPDX-FileCopyrightText: 2020-present Open Networking Foundation <info@opennetworking.org>
+#
+# SPDX-License-Identifier: Apache-2.0
+
+
+loggers:
+  safe:
+    level: debug
+    output:
+      stdout:
+        sink: stdout
+      file:
+        sink: file
+  traces: 
+    level: debug
+    output:
+      stdout:
+        sink: stdout
+      file:
+        sink: file
+      kafka:
+        sink:
+          kafka-traces
+  benchmark:  
+    level: debug
+    output:
+      stdout:
+        sink: stdout
+      file:
+        sink: file-bench
+      kafla:
+        sink: kafka-bench
+
+sinks:
+  stdout:
+    type: stdout
+    encoding: console
+    stdout: {}
+  kafka-traces:
+    type: kafka
+    encoding: json
+    kafka:
+      brokers:
+        - "192.168.60.246:9092"
+      topic: "traces"
+      key: "test"
+  kafka-bench:
+    type: kafka
+    encoding: json
+    kafka:
+      brokers:
+        - "192.168.60.246:9092"
+      topic: "benchmark"
+      key: "test"
+  stdout-1:
+    type: stdout
+    encoding: json
+    stdout: {}
+  file:
+    type: file
+    encoding: json
+    file:
+      path: test.log
+  file-bench:
+    type: file
+    encoding: json
+    file:
+      path: benchmark.log
