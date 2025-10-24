@@ -9,7 +9,6 @@ import (
 	// admissioncontrol "main-service/pkg/admission-control"
 
 	eventhandler "main-service/pkg/event-handler"
-
 	"main-service/pkg/nni"
 	store "main-service/pkg/store-wrapper"
 	monitor "main-service/pkg/structures/temp-monitor-conf"
@@ -29,11 +28,12 @@ func main() {
 	//log.Infof("Starting main service")
 
 	fmt.Println("Starting main service")
+
 	// Create TSN stores
 	store.CreateStores()
 
 	// Temporarily add adapter to k/v store
-	store.StoreAdapter("NETCONF", "gnmi-netconf-adapter")
+	//store.StoreAdapter("NETCONF", "gnmi-netconf-adapter")
 
 	//Create and save the module registry
 	store.StoreModuleRegistry()
@@ -54,7 +54,7 @@ func main() {
 	// Start UNI server
 	go uni.StartServer()
 
-	//pollConfigSubsystemForAvailability()
+	pollConfigSubsystemForAvailability()
 
 	select {}
 }
@@ -76,31 +76,28 @@ func pollConfigSubsystemForAvailability() bool {
 func startDeviceDataCollection(switches []monitor.MonitorConfig) error {
 	c, err := gclient.New(context.Background(), client.Destination{
 		Addrs:       []string{"monitor-service" + ":" + "11161"},
-		Timeout:     time.Second * 5,
+		Timeout:     5 * time.Second,
 		Credentials: nil,
 		TLS:         nil,
 	})
-
 	if err != nil {
-		//log.Errorf("Could not create a gNMI client: %+v", err)
 		return err
-	} else {
-		for _, sw := range switches {
-			_, err := c.(*gclient.Client).Get(context.Background(), &gnmi.GetRequest{
-				Path: []*gnmi.Path{
-					{
-						Elem:   []*gnmi.PathElem{},
-						Target: sw.DeviceIP,
-					},
+	}
+
+	for i := range switches {
+		sw := &switches[i] // ✅ take pointer to avoid copying the struct
+
+		_, err := c.(*gclient.Client).Get(context.Background(), &gnmi.GetRequest{
+			Path: []*gnmi.Path{
+				{
+					Elem:   []*gnmi.PathElem{},
+					Target: sw.DeviceIP,
 				},
-			})
-
-			if err != nil {
-				//log.Errorf("Failed getting response: %v", err)
-				fmt.Printf("Failed getting response: %v\n", err)
-
-				return err
-			}
+			},
+		})
+		if err != nil {
+			fmt.Printf("Failed getting response: %v\n", err)
+			return err
 		}
 	}
 

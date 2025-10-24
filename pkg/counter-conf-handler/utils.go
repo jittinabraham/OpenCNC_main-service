@@ -135,8 +135,8 @@ func GetMonitorConfigDevices() []monitor.MonitorConfig {
 	switches := []monitor.MonitorConfig{}
 
 	for _, sw := range switchesTopo.Nodes {
-		if sw.Type == "bridge" {
-			switches = append(switches, monitor.MonitorConfig{DeviceIP: sw.GetBridge().ManagementInfo.IpAddress, DeviceName: sw.Name, Protocol: "NETCONF"})
+		if sw.Properties != nil && sw.Properties.Bridge != nil {
+			switches = append(switches, monitor.MonitorConfig{DeviceIP: sw.ManagementInfo.IpAddress, DeviceName: sw.Name, Protocol: "NETCONF"})
 			//TODO: Check for other protocols besides NETCONF
 		}
 	}

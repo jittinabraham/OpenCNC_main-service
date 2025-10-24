@@ -271,11 +271,11 @@ func storeNodes(nodes []*topology.Node) error {
 		}
 		var urn = ""
 
-		if node.Type == "bridge" {
+		if node.Properties != nil && node.Properties.Bridge != nil {
 			urn = "bridges." + node.Name
 		}
 
-		if node.Type == "endnode" {
+		if node.Properties != nil && node.Properties.EndStation != nil {
 			urn = "endnodes." + node.Name
 		}
 

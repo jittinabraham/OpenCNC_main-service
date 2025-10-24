@@ -264,7 +264,7 @@ func ConnectToGnmiService(addr string) (client.Impl, error) {
 	client, err := gclient.New(context.Background(), client.Destination{
 		Addrs:       []string{addr},
 		Target:      strings.Split(addr, ":")[0],
-		Timeout:     5 * time.Second,
+		Timeout:     20 * time.Second,
 		Credentials: nil,
 		TLS:         tlsConfig,
 	})
