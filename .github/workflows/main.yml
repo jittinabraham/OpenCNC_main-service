@@ -29,14 +29,13 @@ on:
   push:
     branches:
       - main
-    # Only run if code in this folder changes (optional but recommended)
     paths:
       - 'Dockerfile'
       - 'src/**' 
-
 permissions:
   contents: read
   packages: write
+  
 
 env:
   REGISTRY: ghcr.io
