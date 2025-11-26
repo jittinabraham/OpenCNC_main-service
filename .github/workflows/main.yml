@@ -30,8 +30,7 @@ on:
     branches:
       - main
     paths:
-      - 'Dockerfile'
-      - 'src/**'
+
 
 env:
   REGISTRY: ghcr.io
